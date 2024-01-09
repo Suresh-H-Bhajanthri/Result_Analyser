@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import "../Styles/Marksheet.css";
 
 const Singlestudent = ({ students, courseid, semester }) => {
+  const [loading, setLoading] = useState(false);
   const [marks, setMarks] = useState({
     isa1: students.marks.isa1,
     isa2: students.marks.isa2,
@@ -12,38 +13,80 @@ const Singlestudent = ({ students, courseid, semester }) => {
 
   const updateMarksOnServer = async (exam, marksValue) => {
     console.log('update called......................');
+
+    setLoading(true);
+    try {
+  
       await axios.post("http://localhost:3000/marks", {
         usn: students.usn,
         exam: exam,
         courseid: courseid,
         marks: marksValue,
       });
-
+  
       const response = await axios.post("http://localhost:3000/get", {
         semester: semester,
         division: students.division,
       });
-
+  
       const updatedStudent = response.data.students.find(
         (s) => s.usn === students.usn
       );
-
+  
       setMarks({
         ...marks,
         isa1: updatedStudent.marks.isa1 || 0,
         isa2: updatedStudent.marks.isa2 || 0,
         esa: updatedStudent.marks.esa || 0,
       });
+    } catch (error) {
+      console.error("Error updating marks:", error);
+      // Handle error state here
+    }
+    finally {
+      setLoading(false);
+    }
+
+    console.log(loading);
+
+
+
 
   };
 
-  // const handleInputChange = (event, exam) => {
-  //   const value = event.target.value;
-  //   setMarks((prevMarks) => ({
-  //     ...prevMarks,
-  //     [exam]: value,
-  //   }));
-  // };
+
+
+
+
+  useEffect(() => {
+    const fetchStudentData = async () => {
+      try {
+        const response = await axios.post("http://localhost:3000/get", {
+          semester: semester,
+          division: students.division,
+        });
+
+        const updatedStudent = response.data.students.find((s) => s.usn === students.usn);
+
+        setMarks({
+          isa1: updatedStudent.marks.isa1 || 0,
+          isa2: updatedStudent.marks.isa2 || 0,
+          esa: updatedStudent.marks.esa || 0,
+        });
+      } catch (error) {
+        console.error("Error fetching student data:", error);
+        // Handle error state here
+      }
+    };
+
+    fetchStudentData();
+  }, [semester, students.division, students.usn]);
+
+
+
+
+
+
 
   const handleEnterPress = (event, exam) => {
     if (event.key === "Enter") {
@@ -63,7 +106,7 @@ const Singlestudent = ({ students, courseid, semester }) => {
         <input
           type="number"
           defaultValue={students.marks.isa1}
-          // onChange={(e) => handleInputChange(e, "isa1")}
+          disabled={loading}
           onKeyDown={(e) => handleEnterPress(e, "isa1")}
         />
       </label>
@@ -71,7 +114,7 @@ const Singlestudent = ({ students, courseid, semester }) => {
         <input
           type="number"
           defaultValue={students.marks.isa2}
-          // onChange={(e) => handleInputChange(e, "isa2")}
+          disabled={loading}
           onKeyDown={(e) => handleEnterPress(e, "isa2")}
         />
       </label>
@@ -79,7 +122,7 @@ const Singlestudent = ({ students, courseid, semester }) => {
         <input
           type="number"
           defaultValue={students.marks.esa}
-          // onChange={(e) => handleInputChange(e, "esa")}
+          disabled={loading}
           onKeyDown={(e) => handleEnterPress(e, "esa")}
         />
       </label>

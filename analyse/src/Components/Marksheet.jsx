@@ -40,10 +40,13 @@ const Marksheet = () => {
     },[]);
 
     const handleViewChartClick = () => {
-        // Navigate to the next page with the required props
         navigate('/viewchart', {
-            courseDetails: courseData,
-            studentDetails: studentDetails,
+            state: {
+                 ...courseData,
+                 
+                studentDetails
+            },
+            
         });
     };
     

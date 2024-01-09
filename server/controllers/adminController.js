@@ -198,11 +198,18 @@ exports.marksEntry = async (req, res, next) => {
     const idCourse = course._id.toString();
     console.log('course_id', course._id);
     console.log('idCourse-------->',idCourse);
+    // Checking if the course is found
+    if (!course) {
+      return res.status(404).json({ msg: "Course not found" });
+    }
+
 
     const foundObject = student.marks.find((obj) => {
       // console.log(obj);
       // console.log("courseid->",courseid);
-      return obj._id == idCourse});
+      // return obj._id == idCourse  //new change
+      return obj._id.toString() === idCourse.toString(); //new change
+    });
     if (foundObject) {
       console.log("found");
       if (exam === "isa1") {
@@ -214,10 +221,15 @@ exports.marksEntry = async (req, res, next) => {
       }
 
       await student.save();
+      // return res.status(200).json({
+      //   msg: `marks of ${exam} of student is updated successfully`,
+      //   student, //new change
+    // });
       return res.status(200).json({
-        msg: `marks of ${exam} of student is updated successfully`,
-        student,
+        msg: `Marks of ${exam} for student with USN ${usn} updated successfully`,
+        updatedMarks: { isa1: foundObject.isa1, isa2: foundObject.isa2, esa: foundObject.esa },
       });
+      
     }
 
     if (exam === "isa1") {
