@@ -4,6 +4,7 @@ import Page2 from "./Components/Page2";
 import Page3 from "./Components/Page3";
 import Marksheet from "./Components/Marksheet";
 import Viewchart from "./Components/Viewchart";
+import Viewstudent from "./Components/Viewstudent.jsx";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <Route path="/page3" element={<Page3 />} />
       <Route path="/marksheet" element={<Marksheet />} />
       <Route path="/viewchart" element={<Viewchart />} />
+      <Route path="/student-details" element={<Viewstudent />} />
       </Routes>
     </BrowserRouter>
   )

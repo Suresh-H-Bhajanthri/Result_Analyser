@@ -2,8 +2,11 @@ import { useState,useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import "../Styles/Marksheet.css";
+import { useNavigate } from "react-router-dom";
 
 const Singlestudent = ({ students, courseid, semester }) => {
+
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [marks, setMarks] = useState({
     isa1: students.marks.isa1,
@@ -48,15 +51,7 @@ const Singlestudent = ({ students, courseid, semester }) => {
     }
 
     console.log(loading);
-
-
-
-
   };
-
-
-
-
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -82,12 +77,6 @@ const Singlestudent = ({ students, courseid, semester }) => {
     fetchStudentData();
   }, [semester, students.division, students.usn]);
 
-
-
-
-
-
-
   const handleEnterPress = (event, exam) => {
     if (event.key === "Enter") {
       const value = event.target.value;
@@ -95,8 +84,18 @@ const Singlestudent = ({ students, courseid, semester }) => {
     }
   };
 
+  const handleStudentDetailsClick = () => {
+    // Navigate to another page with student details as props
+    navigate('/student-details', { 
+      state: { 
+        students: students, 
+      },
+    });
+  };
+
+
   return (
-    <div className="m-body">
+    <div className="m-body" onClick={handleStudentDetailsClick}>
       <div className="stu-details">
         <span>{students.name}</span>
         <span>{students.usn}</span>
