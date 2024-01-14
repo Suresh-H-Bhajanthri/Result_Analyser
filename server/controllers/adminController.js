@@ -205,8 +205,8 @@ exports.marksEntry = async (req, res, next) => {
 
 
     const foundObject = student.marks.find((obj) => {
-      // console.log(obj);
-      // console.log("courseid->",courseid);
+        // console.log(obj);
+       // console.log("courseid->",courseid);
       // return obj._id == idCourse  //new change
       return obj._id.toString() === idCourse.toString(); //new change
     });
@@ -221,10 +221,10 @@ exports.marksEntry = async (req, res, next) => {
       }
 
       await student.save();
-      // return res.status(200).json({
-      //   msg: `marks of ${exam} of student is updated successfully`,
+        // return res.status(200).json({
+       //   msg: `marks of ${exam} of student is updated successfully`,
       //   student, //new change
-    // });
+     // });
       return res.status(200).json({
         msg: `Marks of ${exam} for student with USN ${usn} updated successfully`,
         updatedMarks: { isa1: foundObject.isa1, isa2: foundObject.isa2, esa: foundObject.esa },
@@ -318,7 +318,7 @@ const sendMail = async (email, token) => {
     from: "kletech.ac.in",
     to: email,
     subject: "Regarding Password reset",
-    text: `please click the following link to reset your password : http://localhost:3000/reset/${token}`,
+    text: `please click the following link to reset your password : http://localhost:5173/reset/${token}`,
   };
 
   transoprter.sendMail(mailOptions, (err, info) => {
@@ -361,6 +361,7 @@ exports.resetPasswordMail = async (req, res, next) => {
     res.status(404).json({ msg: e.message });
   }
 };
+
 exports.resetPassword = async (req, res, next) => {
   try {
     const token = req.params.token;

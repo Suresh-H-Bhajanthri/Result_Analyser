@@ -31,7 +31,7 @@ router.post("/create/admin", createAdmin);
 
 router.post("/login", login);
 
-router.post("/restetpassword", resetPasswordMail);
+router.post("/resetpassword", resetPasswordMail);
 
 router.post("/reset/:token", resetPassword);
 

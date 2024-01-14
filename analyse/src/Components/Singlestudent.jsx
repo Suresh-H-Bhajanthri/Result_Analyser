@@ -95,8 +95,8 @@ const Singlestudent = ({ students, courseid, semester }) => {
 
 
   return (
-    <div className="m-body" onClick={handleStudentDetailsClick}>
-      <div className="stu-details">
+    <div className="m-body">
+      <div className="stu-details" onClick={handleStudentDetailsClick}>
         <span>{students.name}</span>
         <span>{students.usn}</span>
         <span>{students.email}</span>

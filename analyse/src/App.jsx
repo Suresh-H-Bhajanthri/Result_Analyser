@@ -5,8 +5,11 @@ import Page3 from "./Components/Page3";
 import Marksheet from "./Components/Marksheet";
 import Viewchart from "./Components/Viewchart";
 import Viewstudent from "./Components/Viewstudent.jsx";
+import ResetPasswordPage from "./Components/ResetPasswordPage.jsx";
+
 
 const App = () => {
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -16,6 +19,7 @@ const App = () => {
       <Route path="/marksheet" element={<Marksheet />} />
       <Route path="/viewchart" element={<Viewchart />} />
       <Route path="/student-details" element={<Viewstudent />} />
+      <Route path="/reset/:token" element={<ResetPasswordPage />} />
       </Routes>
     </BrowserRouter>
   )
