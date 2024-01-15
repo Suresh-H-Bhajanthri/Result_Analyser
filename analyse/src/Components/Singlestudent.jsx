@@ -8,11 +8,7 @@ const Singlestudent = ({ students, courseid, semester }) => {
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [marks, setMarks] = useState({
-    isa1: students.marks.isa1,
-    isa2: students.marks.isa2,
-    esa: students.marks.esa,
-  });
+  const [marks, setMarks] = useState({});
 
   const updateMarksOnServer = async (exam, marksValue) => {
     console.log('update called......................');
@@ -56,26 +52,24 @@ const Singlestudent = ({ students, courseid, semester }) => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await axios.post("http://localhost:3000/get", {
-          semester: semester,
-          division: students.division,
-        });
-
-        const updatedStudent = response.data.students.find((s) => s.usn === students.usn);
+        const response2 = await axios.post("http://localhost:3000/getmarks",{
+          usn:students.usn,
+          courseid:courseid
+        })
+        console.log(response2.data, "response2")
 
         setMarks({
-          isa1: updatedStudent.marks.isa1 || 0,
-          isa2: updatedStudent.marks.isa2 || 0,
-          esa: updatedStudent.marks.esa || 0,
+          isa1: response2.data.isa1 || 0,
+          isa2: response2.data.isa2 || 0,
+          esa: response2.data.esa || 0,
         });
+        console.log(marks, "marks");
       } catch (error) {
         console.error("Error fetching student data:", error);
-        // Handle error state here
       }
     };
-
     fetchStudentData();
-  }, [semester, students.division, students.usn]);
+  }, []);
 
   const handleEnterPress = (event, exam) => {
     if (event.key === "Enter") {
@@ -88,7 +82,8 @@ const Singlestudent = ({ students, courseid, semester }) => {
     // Navigate to another page with student details as props
     navigate('/student-details', { 
       state: { 
-        students: students, 
+        students: students,
+        courseid: courseid 
       },
     });
   };
@@ -104,7 +99,7 @@ const Singlestudent = ({ students, courseid, semester }) => {
       <label htmlFor="isa1">
         <input
           type="number"
-          defaultValue={students.marks.isa1}
+          defaultValue={marks.isa1}
           disabled={loading}
           onKeyDown={(e) => handleEnterPress(e, "isa1")}
         />
@@ -112,7 +107,7 @@ const Singlestudent = ({ students, courseid, semester }) => {
       <label htmlFor="isa2">
         <input
           type="number"
-          defaultValue={students.marks.isa2}
+          defaultValue={marks.isa2}
           disabled={loading}
           onKeyDown={(e) => handleEnterPress(e, "isa2")}
         />
@@ -120,7 +115,7 @@ const Singlestudent = ({ students, courseid, semester }) => {
       <label htmlFor="esa">
         <input
           type="number"
-          defaultValue={students.marks.esa}
+          defaultValue={marks.esa}
           disabled={loading}
           onKeyDown={(e) => handleEnterPress(e, "esa")}
         />

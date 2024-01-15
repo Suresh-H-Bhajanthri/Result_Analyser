@@ -13,6 +13,9 @@ const {
   resetPassword,
   getCourses,
   getSemStudents,
+  getMarks,
+  getMarksForChart,
+  getSingleMarks,
 } = require("../controllers/adminController");
 
 const router = express.Router();
@@ -21,6 +24,10 @@ router.post("/create/course", createCourse);
 // router.post('/create/student', createStudent);
 router.get("/create", createStudents);
 router.get("/join", addCourse);
+
+router.post("/getsinglemarks", getSingleMarks);
+router.post("/markschart", getMarksForChart)
+router.post('/getmarks', getMarks);
 
 router.post('/get/courses', getCourses);
 

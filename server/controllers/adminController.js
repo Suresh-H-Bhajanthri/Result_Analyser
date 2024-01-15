@@ -179,66 +179,110 @@ exports.addCourse = async (req, res, next) => {
 
 //  ! Actual functionalities
 
+exports.getSingleMarks = async (req, res, next) => {
+  try {
+    const { usn, courseid } = req.body;
+    const student = await Student.findOne({ usn });
+    if (!student) {
+      res.status(400).json({ msg: 'No student with such usn' });
+    }
+
+    const course = await Course.findOne({ courseId: courseid });
+    let marks;
+    let flag = false;
+    for (let i = 0; i < student.marks.length; i++) {
+      if (student.marks[i].course.toString() == course._id.toString()) {
+        marks = student.marks[i];
+        flag = true;
+        break;
+      }
+    }
+    if(flag == true) {
+      res.status(200).json(marks);
+    }
+    
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ msg: error.message });
+  }
+};
+
+exports.getMarksForChart = async (req, res, next) => {
+  try {
+    const { courseId, division, semester } = req.body;
+    const students = await Student.find({ semester, division });
+    const course = await Course.findOne({ courseId });
+    console.log(course);
+    res.json(students);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ msg: error.message });
+  }
+};
+
+exports.getMarks = async (req, res, next) => {
+  try {
+    let marks;
+    const { usn, courseid } = req.body;
+    const student = await Student.findOne({ usn: usn });
+    const course = await Course.findOne({ courseId: courseid });
+    console.log(course, 'course');
+
+    for (let i = 0; i < student.marks.length; i++) {
+      console.log(student.marks[i].course);
+      if (student.marks[i].course.toString() == course._id.toString()) {
+        console.log('found');
+        marks = student.marks[i];
+      }
+    }
+    res.status(200).json(marks);
+  } catch (error) {
+    console.log(error);
+    res.status(200).json({ msg: error.message });
+  }
+};
+
 exports.marksEntry = async (req, res, next) => {
   try {
-    let mark = 0;
     const { usn, exam, courseid, marks } = req.body;
-
-    console.log("marks entry start...............");
-
+    console.log('marks entry start...............');
     console.log(req.body);
 
     const student = await Student.findOne({ usn: usn });
-
+    console.log('student', student);
     if (!student) {
-      return res.status(404).json({ msg: "Student not found" });
+      return res.status(404).json({ msg: 'Student not found' });
     }
 
-    const course = await Course.findOne({courseId: courseid});
-    const idCourse = course._id.toString();
-    console.log('course_id', course._id);
-    console.log('idCourse-------->',idCourse);
-    // Checking if the course is found
-    if (!course) {
-      return res.status(404).json({ msg: "Course not found" });
-    }
+    const course = await Course.findOne({ courseId: courseid });
 
-
-    const foundObject = student.marks.find((obj) => {
-        // console.log(obj);
-       // console.log("courseid->",courseid);
-      // return obj._id == idCourse  //new change
-      return obj._id.toString() === idCourse.toString(); //new change
-    });
-    if (foundObject) {
-      console.log("found");
-      if (exam === "isa1") {
-        foundObject.isa1 = marks;
-      } else if (exam === "isa2") {
-        foundObject.isa2 = marks;
-      } else if (exam === "esa") {
-        foundObject.esa = marks;
+    let foundObject = false;
+    for (let i = 0; i < student.marks.length; i++) {
+      console.log(i, '-------->', student.marks[i].course, course._id);
+      if (student.marks[i].course.toString() == course._id.toString()) {
+        foundObject = true;
+        if (exam === 'isa1') {
+          student.marks[i].isa1 = marks;
+        } else if (exam === 'isa2') {
+          student.marks[i].isa2 = marks;
+        } else if (exam === 'esa') {
+          student.marks[i].esa = marks;
+        }
+        await student.save();
+        return res.status(200).json({
+          msg: `marks of ${exam} of student is updated successfully`,
+          student,
+        });
       }
-
-      await student.save();
-        // return res.status(200).json({
-       //   msg: `marks of ${exam} of student is updated successfully`,
-      //   student, //new change
-     // });
-      return res.status(200).json({
-        msg: `Marks of ${exam} for student with USN ${usn} updated successfully`,
-        updatedMarks: { isa1: foundObject.isa1, isa2: foundObject.isa2, esa: foundObject.esa },
-      });
-      
     }
 
-    if (exam === "isa1") {
-      student.marks.push({ course: idCourse, isa1: marks });
-    } else if (exam === "isa2") {
-      student.marks.push({ course: idCourse, isa2: marks });
-    } else if (exam === "esa") {
-      student.marks.push({ course: idCourse, esa: marks });
-    } 
+    if (exam === 'isa1') {
+      student.marks.push({ course: course._id, isa1: marks });
+    } else if (exam === 'isa2') {
+      student.marks.push({ course: course._id, isa2: marks });
+    } else if (exam === 'esa') {
+      student.marks.push({ course: course._id, esa: marks });
+    }
     mark = student.marks;
     await student.save();
     res.status(200).json({

@@ -12,7 +12,7 @@
 .top-section {
     height: 100px;
     width: 100%;
-    background-color: #e60096;
+    background-color: #B5E359;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,7 +31,7 @@
 .mid-section {
     height: 600px;
     width: 96%;
-    background-color: #00d2e6;
+    background-color: #C31659;
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -43,7 +43,7 @@
 .topsite {
     width: 60%;
     height: 80px;
-    background-color: #00e6c3;
+    background-color: #C38859;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -65,7 +65,7 @@ select {
   .card-container {
     display: flex;
     justify-content: space-between;
-    gap: 40px;
+    gap: 60px;
     margin-top: 20px;
   }
   

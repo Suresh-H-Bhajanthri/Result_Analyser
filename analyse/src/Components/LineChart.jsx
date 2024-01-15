@@ -1,68 +1,85 @@
-import { Line } from 'react-chartjs-2';
-import 'chart.js/auto';
+import { useEffect, useRef } from 'react';
+import Chart from 'chart.js/auto';
 import PropTypes from "prop-types";
 
-const prepareChartData = (studentDetails) => {
-  const labels = studentDetails.map((studentDetail) => studentDetail.usn); 
-  const datasets = [
-    {
-      label: 'ISA1',
-      data: studentDetails.map((studentDetail) => studentDetail.marks.isa1),
-      borderColor: 'rgba(75, 192, 192, 1)',
-      borderWidth: 2,
-      fill: false,
-      type: 'line',
-    },
-    {
-      label: 'ISA2',
-      data: studentDetails.map((studentDetail) => studentDetail.marks.isa2),
-      borderColor: 'rgba(255, 99, 132, 1)',
-      borderWidth: 2,
-      fill: false,
-      type: 'line',
-    },
-    {
-      label: 'ESA',
-      data: studentDetails.map((studentDetail) => studentDetail.marks.esa),
-      borderColor: 'rgba(54, 162, 235, 1)',
-      borderWidth: 2,
-      fill: false,
-      type: 'line',
-    },
-  ];
 
-  return { labels, datasets };
-};
+const LineChart = ({ data }) => {
+  const chartRef = useRef(null);
 
-const LineChart = ({ studentDetails }) => {
-  const chartData = prepareChartData(studentDetails);
+  useEffect(() => {
+    // Extracting data for plotting
+    console.log(data, 'inside line chart');
+    if (!Array.isArray(data) || data.length === 0) {
+      console.error('Invalid data format');
+      return;
+    }
+    const usnArray = data.map((item) => item.usn);
+    const isa1Array = data.map((item) =>
+      item.marks && item.marks[0] ? item.marks[0].isa1 : null
+    );
+    const isa2Array = data.map((item) =>
+      item.marks && item.marks[0] ? item.marks[0].isa2 : null
+    );
+    const esaArray = data.map((item) =>
+      item.marks && item.marks[0] ? item.marks[0].esa : null
+    );
 
-  const options = {
-    scales: {
-      x: {
-        type: 'category',
-        position: 'bottom',
-        ticks: {
-          callback: (value, index, values) => {
-            return studentDetails[index].usn;
+    // Create or update the line chart
+    const ctx = document.getElementById('lineChart')?.getContext('2d');
+    if (!ctx) {
+      console.error('Canvas context not found');
+      return;
+    }
+
+    // Destroy the previous chart instance
+    if (chartRef.current) {
+      chartRef.current.destroy();
+    }
+
+    // Create a new chart instance
+    chartRef.current = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: usnArray,
+        datasets: [
+          {
+            label: 'ISA1',
+            borderColor: 'rgba(255, 0, 0, 1)',
+            data: isa1Array,
+            fill: false,
+          },
+          {
+            label: 'ISA2',
+            borderColor: 'rgba(0, 255, 0, 1)',
+            data: isa2Array,
+            fill: false,
+          },
+          {
+            label: 'ESA',
+            borderColor: 'rgba(0, 0, 255, 1)',
+            data: esaArray,
+            fill: false,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 50,
           },
         },
       },
-      y: {
-        type: 'linear',
-        position: 'left',
-        min: 0, // Set the minimum value for the y-axis
-        max: 50, // Set the maximum value for the y-axis
-      },
-    },
-  };
-  
+    });
+  }, [data]);
 
-  return <Line data={chartData} options={options} />;
+  return <canvas id="lineChart" width="1400" height="800"></canvas>;
 };
 
 LineChart.propTypes = {
-  studentDetails: PropTypes.arrayOf(
+  data: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       usn: PropTypes.string.isRequired,
@@ -71,20 +88,11 @@ LineChart.propTypes = {
       marks: PropTypes.shape({
         isa1: PropTypes.number.isRequired,
         isa2: PropTypes.number.isRequired,
-        esa: PropTypes.number.isRequired, 
+        esa: PropTypes.number.isRequired,
       }).isRequired,
     })
   ).isRequired,
 };
 
+
 export default LineChart;
-
-
-
-// const LineChart = () => {
-//   return (
-//     <div>LineChart</div>
-//   )
-// }
-
-// export default LineChart

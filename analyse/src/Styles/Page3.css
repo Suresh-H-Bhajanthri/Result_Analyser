@@ -2,7 +2,7 @@
     height: 60px;
     width: 100%;
     padding: 40px;
-    background-color: #ffff00;
+    background-color: #BA6F91;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -14,7 +14,7 @@
 .sub-mid {
     height: 600px;
     width: 96%;
-    background-color: #f5870a;
+    background-color: #446259;
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -27,7 +27,7 @@
 .sub-topsite {
     width: 60%;
     height: 50px;
-    background-color: #00e6c3;
+    background-color: #526D80;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -40,7 +40,7 @@
 .subject-container {
     display: flex;
     justify-content: space-between;
-    gap: 40px;
+    gap: 70px;
     margin-top: 20px;
     scroll-snap-type: x mandatory;
   }
@@ -53,7 +53,7 @@
   .subject-6 {
     height: 300px;
     width: 200px;
-    background-color: #dee2ff;
+    background-color: #B5E3C0;
     border-radius: 10%;
     display: flex;
     flex-direction: column;
