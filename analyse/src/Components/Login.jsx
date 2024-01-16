@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import "../Styles/Login.css"
 
+import { setAuthToken } from '../context/auth.js';
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -19,6 +21,7 @@ const Login = () => {
         password : password,
       });
       const token = response.data.token;
+      setAuthToken(token);
       console.log('Token:',token);
       console.warn("login sucessfull")
        navigate('/page2');
@@ -74,6 +77,7 @@ const Login = () => {
       });
   
       console.log(response.data);
+      alert("Successfully created");
       window.location.reload();
 
     } catch (error) {

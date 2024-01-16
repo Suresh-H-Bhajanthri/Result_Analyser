@@ -362,7 +362,7 @@ const sendMail = async (email, token) => {
     from: "kletech.ac.in",
     to: email,
     subject: "Regarding Password reset",
-    text: `please click the following link to reset your password : http://localhost:5173/reset/${token}`,
+    text: `please click the following link to reset your password : http://localhost:5174/reset/${token}`,
   };
 
   transoprter.sendMail(mailOptions, (err, info) => {

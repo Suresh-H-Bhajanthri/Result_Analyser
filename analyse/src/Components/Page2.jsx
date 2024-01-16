@@ -1,13 +1,20 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../Styles/Page2.css";
 
+import { isAuthenticated } from '../context/auth.js';
+import { removeAuthToken } from '../context/auth.js';
+
 const Page2 = () => {
 
+  const navigate = useNavigate();
+  const [selectedSemester, setSelectedSemester] = useState("select");
 
-    const navigate = useNavigate();
-
-    const [selectedSemester, setSelectedSemester] = useState("select");
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate('/');
+    }
+  }, [navigate]);
 
     const handleSemesterChange = (e) => {
       setSelectedSemester(e.target.value);
@@ -27,6 +34,12 @@ const Page2 = () => {
       });
     };
 
+
+    const handleLogoutClick = () => {
+      // Assuming removeAuthToken and navigate are defined in your auth.js file
+      removeAuthToken();
+      navigate('/');
+    };
     
 
   const renderCards = () => {
@@ -126,6 +139,7 @@ const Page2 = () => {
     <div className="body">
         <div className="top-section">
             <p>Result analysis</p>
+            <p onClick={handleLogoutClick}>Logout</p>
         </div>
         <div className="mid-section">
         <div className="video-container">

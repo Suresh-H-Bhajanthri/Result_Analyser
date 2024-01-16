@@ -4,6 +4,9 @@ import axios from 'axios';
 import "../Styles/Marksheet.css"
 import Singlestudent from './singlestudent';
 
+import { isAuthenticated } from '../context/auth.js';
+import { removeAuthToken } from '../context/auth.js';
+
 const Marksheet = () => {
 
     const { state } = useLocation();
@@ -15,6 +18,11 @@ const Marksheet = () => {
     const [studentDetails, setStudentDetails] = useState([]);
 
     useEffect ( () => {
+
+        if (!isAuthenticated()) {
+            navigate('/');
+          }
+
         const fetchStudentDeatail = async () => {
             console.log(state);
             const response = await axios.post('http://localhost:3000/get',{semester:selectedSemester[0],division:division});
@@ -37,7 +45,7 @@ const Marksheet = () => {
             // setStudentDetails(response.data.students);
         }
         fetchStudentDeatail();
-    },[]);
+    },[navigate]);
 
     const handleViewChartClick = () => {
         navigate('/viewchart', {
@@ -50,6 +58,11 @@ const Marksheet = () => {
         });
     };
     
+    const handleLogoutClick = () => {
+        // Assuming removeAuthToken and navigate are defined in your auth.js file
+        removeAuthToken();
+        navigate('/');
+      };
 
 
   return (
@@ -59,6 +72,7 @@ const Marksheet = () => {
         <span>Course-ID :{courseData.courseId}</span>
         <span>Credits :{courseData.credits}</span>
         <span>Division :{courseData.division}</span>
+        <p onClick={handleLogoutClick}>Logout</p>
     </div>
     <div className="exam-type">
         <span>Student-Details</span>        
