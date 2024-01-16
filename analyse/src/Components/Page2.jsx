@@ -1,20 +1,12 @@
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../Styles/Page2.css";
-
-import { isAuthenticated } from '../context/auth.js';
-import { removeAuthToken } from '../context/auth.js';
+// import { IoCiOutline } from 'react-icons/io5';
 
 const Page2 = () => {
 
   const navigate = useNavigate();
   const [selectedSemester, setSelectedSemester] = useState("select");
-
-  useEffect(() => {
-    if (!isAuthenticated()) {
-      navigate('/');
-    }
-  }, [navigate]);
 
     const handleSemesterChange = (e) => {
       setSelectedSemester(e.target.value);
@@ -26,21 +18,19 @@ const Page2 = () => {
         ...updatedData
       });
        
-      navigate('/page3', {
+      // navigate('/page3', {
+      //   state: {
+      //     selectedSemester,
+      //     data: updatedData,
+      //   },
+      // });
+      navigate('/courses', {
         state: {
           selectedSemester,
           data: updatedData,
         },
       });
     };
-
-
-    const handleLogoutClick = () => {
-      // Assuming removeAuthToken and navigate are defined in your auth.js file
-      removeAuthToken();
-      navigate('/');
-    };
-    
 
   const renderCards = () => {
     let cardStyle = {};
@@ -138,8 +128,12 @@ const Page2 = () => {
   return (
     <div className="body">
         <div className="top-section">
-            <p>Result analysis</p>
-            <p onClick={handleLogoutClick}>Logout</p>
+          {/* <img src="public/images/logo.png" alt="xyz"/> */}
+          <img src="public/images/l-logo.png" alt="xyz"/>
+          <div className="tag-container">
+          <p>Logout</p>
+          <img src="public/images/logout1.png" alt="xyz" style={{ width: '60px', height: '60px',marginTop: '' }} />
+          </div>
         </div>
         <div className="mid-section">
         <div className="video-container">

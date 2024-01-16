@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import LineChart from './LineChart.jsx';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
-import { isAuthenticated } from '../context/auth.js';
-import { removeAuthToken } from '../context/auth.js';
+import "../Styles/Viewchart.css"
 
 const Viewchart = () => {
   const navigate = useNavigate();
@@ -19,9 +17,6 @@ const Viewchart = () => {
 
   useEffect(()=>{
 
-    if (!isAuthenticated()) {
-      navigate('/');
-    }
     const getMarks = async () => {
       const response = await axios.post('http://localhost:3000/markschart', {
         division,
@@ -35,16 +30,24 @@ const Viewchart = () => {
       getMarks();
     }, [navigate])
 
-    const handleLogoutClick = () => {
-      removeAuthToken();
-      navigate('/');
-    };
 
   return (
     <div>
-      <h2>graph of students for {courseData.courseName}</h2>
-      <p onClick={handleLogoutClick}>Logout</p>
+      <div className="chart-header">
+      <img src="public/images/l-logo.png" alt="xyz" style={{width: '280px', height: '75px', marginLeft: '20px'}} />
+      <div className="tag-container">
+          <p>Logout</p>
+          <img src="public/images/logout1.png" alt="xyz" style={{ width: '60px', height: '60px',marginTop: '' }} />
+        </div>
+      </div>
+      <div className="h2style">
+      <h2>Graph of students for {courseData.courseName}</h2>
+      </div>
+      
+      <div className="stu-charts">
       {student && <LineChart data={student} />}
+      </div>
+      
     </div>
   )
 }

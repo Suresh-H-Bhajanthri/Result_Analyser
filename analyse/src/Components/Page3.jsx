@@ -1,25 +1,17 @@
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';  
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios'; 
 import "../Styles/Page3.css";
 import Singlecourse from './Singlecourse';
 
-import { isAuthenticated } from '../context/auth.js';
-import { removeAuthToken } from '../context/auth.js';
-
 const Page3 = () => {
-  const navigate = useNavigate();
     const { state } = useLocation();  
     const { selectedSemester, data } = state || {};
     const [courseDetails, setCourseDetails] = useState([]);
 
     useEffect ( () =>{
-      if (!isAuthenticated()) {
-        navigate('/');
-      }
 
       const fetchCourseDetails = async () => {
         const response = await axios.post('http://localhost:3000/get/courses', {semester:selectedSemester[0]});
@@ -29,22 +21,21 @@ const Page3 = () => {
         
       }
       fetchCourseDetails();
-    },[navigate] )
+    },[] )
 
-    const handleLogoutClick = () => {
-      // Assuming removeAuthToken and navigate are defined in your auth.js file
-      removeAuthToken();
-      navigate('/');
-    };
 
   return (
     <div className="body">
         <div className='class-details'>
+          <img src="public/images/l-logo.png" alt="xyz" style={{width: '280px', height: '75px', marginRight: ''}} />
           <span>Semester: {selectedSemester}</span>
           <span>Mentor: {data.mentor ?? 'N/A'}</span>
           <span>CR: {data.cr ?? 'N/A'}</span>
           <span>Division: {data.division ?? 'N/A'}</span>
-          <p onClick={handleLogoutClick}>Logout</p>
+          <div className="tag-container">
+          <p>Logout</p>
+          <img src="public/images/logout1.png" alt="xyz" style={{ width: '60px', height: '60px' }} />
+          </div>
         </div>
         <div className="sub-mid">
             <div className="sub-topsite">

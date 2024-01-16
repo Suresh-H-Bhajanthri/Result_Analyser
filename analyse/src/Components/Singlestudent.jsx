@@ -13,6 +13,21 @@ const Singlestudent = ({ students, courseid, semester }) => {
   const updateMarksOnServer = async (exam, marksValue) => {
     console.log('update called......................');
 
+    if(exam === "isa1" || exam === "isa2"){
+      const isValidIsa = marksValue >= 0 && marksValue <= 25;
+      if (!isValidIsa){
+        alert("Invalid marks. Check the ranges: isa1 (0-25), isa2 (0-25), esa (0-50)");
+        return;
+      }
+    else{
+      const isValidEsa = marksValue >= 0 && marksValue <= 50;
+      if(!isValidEsa){
+        alert("Invalid marks. Check the ranges: isa1 (0-25), isa2 (0-25), esa (0-50)");
+    return;
+      }
+    }
+}
+
     setLoading(true);
     try {
   
@@ -34,9 +49,9 @@ const Singlestudent = ({ students, courseid, semester }) => {
   
       setMarks({
         ...marks,
-        isa1: updatedStudent.marks.isa1 || 0,
-        isa2: updatedStudent.marks.isa2 || 0,
-        esa: updatedStudent.marks.esa || 0,
+        isa1: updatedStudent.data.isa1 ,
+        isa2: updatedStudent.data.isa2 ,
+        esa: updatedStudent.data.esa ,
       });
     } catch (error) {
       console.error("Error updating marks:", error);
@@ -59,9 +74,9 @@ const Singlestudent = ({ students, courseid, semester }) => {
         console.log(response2.data, "response2")
 
         setMarks({
-          isa1: response2.data.isa1 || 0,
-          isa2: response2.data.isa2 || 0,
-          esa: response2.data.esa || 0,
+          isa1: response2.data.isa1 ,
+          isa2: response2.data.isa2 ,
+          esa: response2.data.esa ,
         });
         console.log(marks, "marks");
       } catch (error) {
@@ -119,9 +134,6 @@ const Singlestudent = ({ students, courseid, semester }) => {
           disabled={loading}
           onKeyDown={(e) => handleEnterPress(e, "esa")}
         />
-      </label>
-      <label htmlFor="grade">
-        <input type="number" />
       </label>
     </div>
   );

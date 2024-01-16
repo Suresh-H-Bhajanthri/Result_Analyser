@@ -6,18 +6,19 @@ import Marksheet from "./Components/Marksheet";
 import Viewchart from "./Components/Viewchart";
 import Viewstudent from "./Components/Viewstudent.jsx";
 import ResetPasswordPage from "./Components/ResetPasswordPage.jsx";
+import Home from "./Components/Home.jsx";
 
 
 const App = () => {
-  
   return (
     <BrowserRouter>
       <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/page2" element={<Page2 />} />
-      <Route path="/page3" element={<Page3 />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/semester" element={<Page2 />} />
+      <Route path="/courses" element={<Page3 />} />
       <Route path="/marksheet" element={<Marksheet />} />
-      <Route path="/viewchart" element={<Viewchart />} />
+      <Route path="/result-analysis" element={<Viewchart />} />
       <Route path="/student-details" element={<Viewstudent />} />
       <Route path="/reset/:token" element={<ResetPasswordPage />} />
       </Routes>

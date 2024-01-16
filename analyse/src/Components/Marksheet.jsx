@@ -4,8 +4,6 @@ import axios from 'axios';
 import "../Styles/Marksheet.css"
 import Singlestudent from './singlestudent';
 
-import { isAuthenticated } from '../context/auth.js';
-import { removeAuthToken } from '../context/auth.js';
 
 const Marksheet = () => {
 
@@ -19,10 +17,6 @@ const Marksheet = () => {
 
     useEffect ( () => {
 
-        if (!isAuthenticated()) {
-            navigate('/');
-          }
-
         const fetchStudentDeatail = async () => {
             console.log(state);
             const response = await axios.post('http://localhost:3000/get',{semester:selectedSemester[0],division:division});
@@ -31,13 +25,14 @@ const Marksheet = () => {
 
 
                 console.log(courseData);
+                console.log(selectedCourse);
             const studentsWithCorrectMarks = response.data.students.map(student => ({
                 ...student,
-                marks: {
-                    isa1: student.marks.isa1 || 0,
-                    isa2: student.marks.isa2 || 0,
-                    esa: student.marks.esa || 0,
-                },
+                // marks: {
+                //     isa1: student.marks.isa1 || 0,
+                //     isa2: student.marks.isa2 || 0,
+                //     esa: student.marks.esa || 0,
+                // },
             }));
 
             setStudentDetails(studentsWithCorrectMarks);
@@ -45,10 +40,10 @@ const Marksheet = () => {
             // setStudentDetails(response.data.students);
         }
         fetchStudentDeatail();
-    },[navigate]);
+    },[]);
 
     const handleViewChartClick = () => {
-        navigate('/viewchart', {
+        navigate('/result-analysis', {
             state: {
                  ...courseData,
                  
@@ -58,28 +53,26 @@ const Marksheet = () => {
         });
     };
     
-    const handleLogoutClick = () => {
-        // Assuming removeAuthToken and navigate are defined in your auth.js file
-        removeAuthToken();
-        navigate('/');
-      };
 
 
   return (
     <>
     <div className="m-header">
+        <img src="public/images/l-logo.png" alt="xyz" style={{width: '280px', height: '75px', marginLeft: '-35px'}} />
         <span>Course-Name :{courseData.courseName}</span>
         <span>Course-ID :{courseData.courseId}</span>
         <span>Credits :{courseData.credits}</span>
         <span>Division :{courseData.division}</span>
-        <p onClick={handleLogoutClick}>Logout</p>
+        <div className="tag-container">
+          <p>Logout</p>
+          <img src="public/images/logout1.png" alt="xyz" style={{ width: '60px', height: '60px' }} />
+          </div>
     </div>
     <div className="exam-type">
         <span>Student-Details</span>        
         <span>ISA1</span>        
         <span>ISA2</span>        
         <span>ESA</span>        
-        <span>Grade</span>        
     </div>
     <div className="stu-container">
     {studentDetails?.map((students) => {
@@ -87,7 +80,8 @@ const Marksheet = () => {
     })}
     </div>
     <div className="btn">
-       <button onClick={() => handleViewChartClick()}>View Chart</button>
+        <p onClick={() => handleViewChartClick()}>View chart</p>
+       {/* <button onClick={() => handleViewChartClick()}>View Chart</button> */}
     </div>
 
     </>

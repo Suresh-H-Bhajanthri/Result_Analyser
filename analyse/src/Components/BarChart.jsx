@@ -32,14 +32,17 @@ const BarChart = ({ marks }) => {
     scales: {
       y: {
         beginAtZero: true,
+        max : 50,
       },
     },
   };
 
   return (
-    <div>
+    <div className='bar-charts'>
       <h2>Bar Chart</h2>
+      <div className="charts">
       {datamarks && <Bar data={data} options={options} />}
+      </div>
     </div>
   );
 };
