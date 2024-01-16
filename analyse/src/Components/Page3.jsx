@@ -35,8 +35,8 @@ const Page3 = () => {
                 <span>{selectedSemester}</span>
             </div>
             <div className="subject-container">
-                {courseDetails?.map((course) => {
-                  return <Singlecourse key={course._id} course={course} selectedSemester={selectedSemester} division={data.division}/>;
+                {courseDetails?.map((course, index) => {
+                  return <Singlecourse key={course._id} course={course} selectedSemester={selectedSemester} division={data.division} index={index}/>;
                 })}
             </div>        
         </div>

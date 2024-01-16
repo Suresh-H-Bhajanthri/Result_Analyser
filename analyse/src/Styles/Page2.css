@@ -1,13 +1,9 @@
 .body {
     width: 100%;
-    height: 720px;
-    /* min-height: 100vh; */
-    background-color: #ece4db;
+    height: 690px;
     margin: 0;
     overflow: hidden; 
-
 }
-
 
 .top-section {
     height: 100px;
@@ -19,7 +15,8 @@
     top: 0;
     left: 0;
     right: 0;
-    margin: 0;
+    margin-bottom: 10px;
+    border-radius: 20px;
 }
 
 .top-section p{
@@ -28,26 +25,50 @@
     color: white;
 }
 
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 690px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+}
+video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.topsite,
+.card-container {
+    position: relative;
+    z-index: 1;
+    color: black; /* Adjust text color for visibility on video */
+}
+
 .mid-section {
-    height: 600px;
-    width: 96%;
-    background-color: #C31659;
-    padding: 30px;
+    height: 690px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     top: 0;
     left: 0;
     right: 0;
+    border-radius: 10px;
 }
 .topsite {
-    width: 60%;
+    width: 40%;
     height: 80px;
-    background-color: #C38859;
+    background-color: #d8f3dc;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
-    border-radius: 10%;
+    justify-content: center;
+    border-radius: 10px;
     padding: 10px 20px;
     box-shadow: 30px 30px 30px rgba(0, 0, 0, 0.1);
 
@@ -81,10 +102,10 @@ select {
     align-items: center;
     justify-content: center;
     margin-top: 30px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0.5, 0.5, 0.7, 0.7);
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
-
+    /* border: .2px solid black; */
 }
 
 .card-1:hover,

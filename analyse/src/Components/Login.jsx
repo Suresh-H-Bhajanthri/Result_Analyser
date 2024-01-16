@@ -26,6 +26,7 @@ const Login = () => {
     catch (error) {
       console.error('Login failed:',error.message);
       alert('Login failed : (Invalid email or password)');
+      window.location.reload();
     }
   }
 
@@ -60,6 +61,7 @@ const Login = () => {
       window.location.reload();
     } catch (error) {
       console.error('Error resetting password:', error.message);
+      window.location.reload();
     }
   };
 
@@ -76,6 +78,7 @@ const Login = () => {
 
     } catch (error) {
       console.error('Error creating admin:', error.message);
+      window.location.reload();
     }
   };
 
@@ -94,14 +97,14 @@ const Login = () => {
               <>
               <h2> Register admin</h2>
               {/* register */}
-            <form>
+            <form className="form">
             <label htmlFor="username"> Enter name : </label>
                 <input type="text" id="username" required value={username} onChange={(e) => setUsername(e.target.value)} />
                 <label htmlFor="register-email"> Enter mail : </label>
                 <input type="email" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
                 <label htmlFor="password"> Enter password : </label>
                 <input type="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-                <p onClick={alreadyExists}> Already exists? Login here </p>
+                <p className='p1-tag' onClick={alreadyExists}> Already exists? Login here </p>
                 <button type="button" onClick={createNewAdmin}>
                   Register
                 </button>
@@ -114,7 +117,7 @@ const Login = () => {
               <div className="f-type">
                 {resetPasswordMode ? (
                   // reset password form
-                  <form>
+                  <form className="form">
                      <label htmlFor="reset-email"> Enter mail : </label>
                     <input type="email" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
                     <p onClick={rememberPassword}>RememberPassword</p>

@@ -6,7 +6,7 @@ const Page2 = () => {
 
 
     const navigate = useNavigate();
-    
+
     const [selectedSemester, setSelectedSemester] = useState("select");
 
     const handleSemesterChange = (e) => {
@@ -30,10 +30,18 @@ const Page2 = () => {
     
 
   const renderCards = () => {
+    let cardStyle = {};
+    if (selectedSemester === "3rd sem") {
+      cardStyle = { backgroundColor: '#FFD700' }; 
+    } else if (selectedSemester === "5th sem") {
+      // cardStyle = { backgroundColor: '#00FA9A' };
+      cardStyle = { backgroundColor: '#dee2ff' }; 
+    }
+
     if (selectedSemester === "3rd sem") {
       return (
         <>
-          <div className="card-1" onClick={() => handleCardClick({ strength: 30, mentor: 'Prof. manjula', cr: 'Darshan', division: 'A' })}>
+          <div className="card-1" style={cardStyle} onClick={() => handleCardClick({ strength: 30, mentor: 'Prof. manjula', cr: 'Darshan', division: 'A' })}>
                    <div className="alpha-img">
                        <img src="https://4.bp.blogspot.com/-sL27hk1Aq30/VxsWEnra7PI/AAAAAAAAE_s/Bp0iEq8srb4m8xQpgbYH1Zh_ylfIicBfACLcB/s1600/3dAletter.png" alt="xyz"  className="a-alpha"/>
                    </div>
@@ -44,7 +52,7 @@ const Page2 = () => {
                    <span>Division :A</span>
                    </div>     
                 </div>
-                <div className="card-2" onClick={() => handleCardClick({ strength: 20, mentor: 'Prof. sushil', cr: 'rohit', division: 'B' })}>
+                <div className="card-2" style={cardStyle} onClick={() => handleCardClick({ strength: 20, mentor: 'Prof. sushil', cr: 'rohit', division: 'B' })}>
                    <div className="alpha-img">
                        <img src="https://3.bp.blogspot.com/--qjkLEY-CLo/VxsWIsHb2BI/AAAAAAAAE_w/86yz5MkdSQkUk_pTxDryFwQ3GGrKfAHzwCLcB/s1600/3dBletter.png" alt="xyz"  className="a-alpha"/>
                    </div>
@@ -55,7 +63,7 @@ const Page2 = () => {
                    <span>Division :B</span>
                    </div>      
                 </div>
-                <div className="card-3" onClick={() => handleCardClick({ strength: 20, mentor: 'Prof. sagar', cr: 'sagar', division: 'C' })}>
+                <div className="card-3" style={cardStyle} onClick={() => handleCardClick({ strength: 20, mentor: 'Prof. sagar', cr: 'sagar', division: 'C' })}>
                    <div className="alpha-img">
                        <img src="https://4.bp.blogspot.com/-elNbDyMXaRc/VxsWEYpS4uI/AAAAAAAAE_o/mNtCp07G-voaDBSyR5wkdf5hNoXtGwq8wCLcB/s1600/3dCletter.png" alt="xyz"  className="a-alpha"/>
                    </div>
@@ -71,9 +79,9 @@ const Page2 = () => {
     } else if (selectedSemester === "5th sem") {
       return (
         <>
-          <div className="card-1" onClick={() => handleCardClick({ strength: 30, mentor: 'Prof. manjula', cr: 'Darshan', division: 'A' })}>
+          <div className="card-1" style={cardStyle} onClick={() => handleCardClick({ strength: 30, mentor: 'Prof. manjula', cr: 'Darshan', division: 'A' })}>
                    <div className="alpha-img">
-                       <img src="https://cdn.pixabay.com/photo/2020/09/18/17/39/letter-a-5582503_640.png" alt="xyz"  className="a-alpha"/>
+                       <img src="https://4.bp.blogspot.com/-sL27hk1Aq30/VxsWEnra7PI/AAAAAAAAE_s/Bp0iEq8srb4m8xQpgbYH1Zh_ylfIicBfACLcB/s1600/3dAletter.png" alt="xyz"  className="a-alpha"/>
                    </div>
                    <div className="card-text">
                    <span>Strength :30 </span>
@@ -82,9 +90,9 @@ const Page2 = () => {
                    <span>Division :A</span>
                    </div>     
                 </div>
-                <div className="card-2" onClick={() => handleCardClick({ strength: 30, mentor:'Prof. sushil', cr: 'rohit', division: 'B' })}>
+                <div className="card-2" style={cardStyle} onClick={() => handleCardClick({ strength: 30, mentor:'Prof. sushil', cr: 'rohit', division: 'B' })}>
                    <div className="alpha-img">
-                       <img src="https://cdn.pixabay.com/photo/2020/09/13/19/10/letter-b-5569125_1280.png" alt="xyz"  className="a-alpha"/>
+                       <img src="https://3.bp.blogspot.com/--qjkLEY-CLo/VxsWIsHb2BI/AAAAAAAAE_w/86yz5MkdSQkUk_pTxDryFwQ3GGrKfAHzwCLcB/s1600/3dBletter.png" alt="xyz"  className="a-alpha"/>
                    </div>
                    <div className="card-text">
                    <span>Strength :20 </span>
@@ -93,9 +101,9 @@ const Page2 = () => {
                    <span>Division :B</span>
                    </div>      
                 </div>
-                <div className="card-3" onClick={() => handleCardClick({ strength: 20, mentor: 'Prof. sagar', cr: 'sagar', division: 'C' })}>
+                <div className="card-3" style={cardStyle} onClick={() => handleCardClick({ strength: 20, mentor: 'Prof. sagar', cr: 'sagar', division: 'C' })}>
                    <div className="alpha-img">
-                       <img src="https://cdn.pixabay.com/photo/2020/09/13/19/09/letter-c-5569119_640.png" alt="xyz"  className="a-alpha"/>
+                       <img src="https://4.bp.blogspot.com/-elNbDyMXaRc/VxsWEYpS4uI/AAAAAAAAE_o/mNtCp07G-voaDBSyR5wkdf5hNoXtGwq8wCLcB/s1600/3dCletter.png" alt="xyz"  className="a-alpha"/>
                    </div>
                    <div className="card-text">
                    <span>Strength :20 </span>
@@ -107,7 +115,8 @@ const Page2 = () => {
         </>
       );
     } else {
-      return <p>Select a semester to see the cards.</p>;
+      return <p></p>;
+      // return <p>Select a semester to see the divisions.</p>;
     }
   };
 
@@ -119,6 +128,11 @@ const Page2 = () => {
             <p>Result analysis</p>
         </div>
         <div className="mid-section">
+        <div className="video-container">
+              <video autoPlay muted loop>
+                  <source src="public/videos/background-video.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+              </video>
             <div className="topsite">
                 <p>SEMESTER</p>
                 <select name="semester" id="semester" onChange = {(e) => handleSemesterChange(e)} value={selectedSemester}>
@@ -129,8 +143,8 @@ const Page2 = () => {
             </div>
             <div className="card-container">
                 {renderCards()}
-            </div>
-            
+            </div>  
+        </div>
         </div>
     </div>
   )

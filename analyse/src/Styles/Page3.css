@@ -1,11 +1,13 @@
 .class-details {
-    height: 60px;
+    height: 100px;
     width: 100%;
-    padding: 40px;
-    background-color: #BA6F91;
+    background-color: #00b4d8;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    border-radius: 0 0 30px 30px;
+    margin-bottom: 10px;
+    overflow: hidden;
 }
 .class-details span {
     font-size: 20px;
@@ -14,7 +16,7 @@
 .sub-mid {
     height: 600px;
     width: 96%;
-    background-color: #446259;
+    background-color: #0077b6;
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -22,17 +24,17 @@
     top: 0;
     left: 0;
     right: 0;
-    /* overflow-x: auto; */
+    border-radius: 20px;
 }
 .sub-topsite {
-    width: 60%;
+    width: 40%;
     height: 50px;
-    background-color: #526D80;
+    background-color: #caf0f8;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10%;
+    border-radius: 10px;
     padding: 10px 20px;
     box-shadow: 30px 30px 30px rgba(0, 0, 0, 0.1);
 }
@@ -40,7 +42,7 @@
 .subject-container {
     display: flex;
     justify-content: space-between;
-    gap: 70px;
+    gap: 50px;
     margin-top: 20px;
     scroll-snap-type: x mandatory;
   }
@@ -53,7 +55,7 @@
   .subject-6 {
     height: 300px;
     width: 200px;
-    background-color: #B5E3C0;
+    background-color: #ade8f4;
     border-radius: 10%;
     display: flex;
     flex-direction: column;
@@ -75,3 +77,17 @@
 .subject-6:hover {
     transform: scale(1.3); /* Increase size on hover */
 }
+
+.alpha-img {
+    height: 180px; /* Set a fixed height for the image container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .a-alpha {
+    width: 100%; /* Ensure the image covers the entire .alpha-img div */
+    height: 100%;
+    object-fit: cover; /* Maintain aspect ratio without distortion */
+    border-radius: 10%;
+  }

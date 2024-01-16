@@ -4,7 +4,7 @@ import "../Styles/Page3.css";
 import { useState } from "react";
 
 
-const Singlecourse = ({course, selectedSemester,division}) => {
+const Singlecourse = ({course, selectedSemester, division, index}) => {
 
   const navigate = useNavigate();
   const [selectedCourse, setSelectedCourse] = useState("select");
@@ -13,6 +13,19 @@ const Singlecourse = ({course, selectedSemester,division}) => {
     courseId: course.courseId,
     credits: course.credits
   });
+
+
+  const determineImageSource = (semester, index) => {
+    const folderName = semester === "3rd sem" ? "3rd-semimages" : "5th-semimages";
+    const imageCount = semester === "3rd sem" ? 4 : 6;
+
+    // Calculate the image index based on the total number of images
+    const imageIndex = index % imageCount + 1;
+
+    // Use the appropriate image source based on the selected semester and index
+    return `/public/${folderName}/img${imageIndex}.png`;
+  };
+
 
   const handleClick = () => {
     console.log(division);
@@ -37,12 +50,12 @@ const Singlecourse = ({course, selectedSemester,division}) => {
     });
   };
 
-
+  const imageSource = determineImageSource(selectedSemester, index);
 
   return (
     <div  className="subject-1" onClick={handleClick}>
                    <div className="alpha-img">
-                       <img src="https://4.bp.blogspot.com/-sL27hk1Aq30/VxsWEnra7PI/AAAAAAAAE_s/Bp0iEq8srb4m8xQpgbYH1Zh_ylfIicBfACLcB/s1600/3dAletter.png" alt="xyz"  className="a-alpha"/>
+                       <img src={imageSource} alt="xyz"  className="a-alpha"/>
                    </div>
                    <div className="card-text">
                    <span>course-name :{course.courseName} </span>
@@ -62,6 +75,7 @@ Singlecourse.propTypes = {
   }).isRequired,
   selectedSemester: PropTypes.string,
   division: PropTypes.string,
+  index: PropTypes.number.isRequired
 };
 
 export default Singlecourse
